@@ -26,7 +26,7 @@ const createNewVillain = async (request, response) => {
     name, movie, slug
   })
 
-  return response.status(201).send(newVillain)
+  return response.status(201).send(newVillain, 'createdAt', 'updatedAt')
 }
 
 module.exports = { getAllVillains, getBySlug, createNewVillain }
