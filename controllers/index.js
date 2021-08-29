@@ -8,12 +8,17 @@ const getAllVillains = async (request, response) => {
 }
 
 const getBySlug = async (request, response) => {
-  const { slug } = request.params
-  const foundVillain = await models.villains.findOne({ where: { slug } })
+  try {
+    const { slug } = request.params
 
-  if (!foundVillain) return response.status(404).send('404 Error')
+    const foundVillain = await models.villains.findOne({ where: { slug } })
 
-  return response.send(foundVillain)
+    return foundVillain
+      ? response.send(foundVillain)
+      : response.sendStatus(404)
+  } catch (error) {
+    return response.status(500).send('Unable to retrieve villain, please try again')
+  }
 }
 
 const createNewVillain = async (request, response) => {
@@ -26,7 +31,9 @@ const createNewVillain = async (request, response) => {
     name, movie, slug
   })
 
-  return response.status(201).send(newVillain, 'createdAt', 'updatedAt')
+  // return response.status(201).send(newVillain, 'createdAt', 'updatedAt')//
+  return response.status(201).send(newVillain)
 }
+
 
 module.exports = { getAllVillains, getBySlug, createNewVillain }

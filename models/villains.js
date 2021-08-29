@@ -3,6 +3,8 @@ const villainsModel = (connection, Sequelize) => connection.define('villains', {
   name: { type: Sequelize.STRING },
   movie: { type: Sequelize.STRING },
   slug: { type: Sequelize.STRING },
-})
+}, { paranoid: true })
+
 
 module.exports = villainsModel
+
